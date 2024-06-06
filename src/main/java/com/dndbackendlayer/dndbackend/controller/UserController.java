@@ -3,6 +3,7 @@ package com.dndbackendlayer.dndbackend.controller;
 import com.dndbackendlayer.dndbackend.model.User;
 import com.dndbackendlayer.dndbackend.repo.UserRepo;
 import com.dndbackendlayer.dndbackend.exception.UserNotFoundException;
+import com.dndbackendlayer.dndbackend.services.UserService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,12 @@ public class UserController {
     @Autowired
     private UserRepo userRepo;
 
-    @PostMapping("/user")
+    private UserService service;
+
+    @PostMapping("/newuser")
     User newUser(@RequestBody User newUser) {
-        return userRepo.save(newUser);
+        service.addUser(newUser);
+        return newUser;
     }
 
     @GetMapping("/users")
