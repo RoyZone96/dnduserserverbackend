@@ -1,12 +1,17 @@
 package com.dndbackendlayer.dndbackend.model;
 
+import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
 
 
+
+
 @Entity
+
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +19,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private boolean isAdmin;
+    private String role;
 
     // Generate getters and setters
     public long getId() {
@@ -49,11 +54,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public String getRole() {
+        return role;
     }
 
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
