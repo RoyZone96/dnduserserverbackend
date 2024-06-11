@@ -11,6 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,7 +25,7 @@ public class SecurityConfig {
 
     @Bean
     // authentication for users amd admins
-    public UserDetailsService UserDetailsService(PasswordEncoder encoder) {
+    public UserDetailsService UserDetailsService() {
         return new UserInfoUserDetailsService();
     }
 
@@ -39,6 +42,14 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+       DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+       provider.setUserDetailsService(UserDetailsService());
+       provider.setPasswordEncoder(passwordEncoder());
+       return provider;
     }
 
 }
