@@ -21,16 +21,16 @@ public class UserController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
     private UserService service;
 
-    @PostMapping("/newuser")
-    User newUser(@RequestBody User newUser) {
-        service.addUser(newUser);
-        return newUser;
+    @PostMapping("/users/newuser")
+    public String addNewUser(@RequestBody User user) {
+        return service.addUser(user);
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('admin')")
     List<User> getAllUsers() {
         return userRepo.findAll();
     }

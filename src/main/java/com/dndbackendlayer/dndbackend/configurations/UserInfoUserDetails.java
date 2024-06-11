@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.hibernate.annotations.DialectOverride.OverridesAnnotation;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.dndbackendlayer.dndbackend.repo.UserRepo;
+
 import com.dndbackendlayer.dndbackend.model.User;
 
 public class UserInfoUserDetails implements UserDetails {

@@ -6,20 +6,25 @@ import com.dndbackendlayer.dndbackend.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 @Service
 @Transactional
-public class UserService {
+public class UsersService {
 
     @Autowired
     UserRepo userRepo;
 
-    public User newUser(User newUser) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public String addNewUser(User user) {
         System.out.println("The method did get called, yo");
-        System.out.println(newUser.getEmail() + " " + newUser.getPassword() + " " + newUser.getUsername());
-        return userRepo.save(newUser);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
+        return "New user added successfully!";
     }
 
     public List<User> getAllUsers() {
