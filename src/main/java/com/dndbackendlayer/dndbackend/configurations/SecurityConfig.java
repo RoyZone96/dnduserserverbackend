@@ -1,16 +1,21 @@
 
 package com.dndbackendlayer.dndbackend.configurations;
 
+import com.dndbackendlayer.dndbackend.filters.JwtAuthFilter;
 
 import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy; 
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +35,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private JwtAuthFilter authFilter;
 
     @Bean
     // authentication for users amd admins
@@ -53,8 +61,13 @@ public class SecurityConfig {
                 .requestMatchers("/users/newuser", "/users/authenticate").permitAll()
                 .and()
                 .authorizeRequests().requestMatchers("/users/**")
-                .authenticated().and().formLogin();
-        return http.build();
+                .authenticated().and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+                return http.build();
     }
 
     @Bean

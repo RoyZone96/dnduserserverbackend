@@ -97,8 +97,7 @@ public class UserController {
         if(authentication.isAuthenticated()) {
             return jwtServices.generateToken(authRequest.getUsername());
         } else {
-            return "Invalid username or password.";
-            // throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Invalid username or password.");
         }
     }
 }
