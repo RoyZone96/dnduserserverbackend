@@ -1,17 +1,20 @@
 package com.dndbackendlayer.dndbackend.model;
 
+import java.util.List;
+
 import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 
 
 
 
 @Entity
-
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +23,8 @@ public class User {
     private String password;
     private String email;
     private String role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bookmark> bookmarks;
 
     // Generate getters and setters
     public long getId() {
@@ -60,5 +65,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Bookmark> getBookmarks() {
+        return bookmarks;
+    }
+
+    public void setBookmarks(List<Bookmark> bookmarks) {
+        this.bookmarks = bookmarks;
     }
 }
