@@ -27,6 +27,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
+
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired

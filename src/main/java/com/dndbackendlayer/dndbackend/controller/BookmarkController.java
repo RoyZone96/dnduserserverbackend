@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.Collections;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/bookmarks") public class BookmarkController {
 
     @Autowired
@@ -28,7 +29,7 @@ import java.util.Collections;
     
 
     // Endpoint to create a new bookmark
-    @PostMapping
+    @PostMapping("/createBookmark")
     public Bookmark createBookmark(@RequestBody Bookmark bookmark) {
         return bookmarkService.saveBookmark(bookmark);
     }
