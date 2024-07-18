@@ -65,8 +65,12 @@ import java.util.Collections;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBookmarkById(@PathVariable Long id) {
-        bookmarkService.deleteBookmark(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> deleteBookmark(@PathVariable Long id) {
+        try {
+            bookmarkService.deleteBookmark(id);
+            return ResponseEntity.ok().body("Bookmark deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error deleting bookmark");
+        }
     }
 }
